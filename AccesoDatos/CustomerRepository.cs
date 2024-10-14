@@ -91,5 +91,30 @@ namespace AccesoDatos
 
         }
 
+        public int ActualizarCliente(Customers customers)
+        {
+            using (var conexion = DataBase.GetSqlConnection())
+            {
+                String updateCustomers = "";
+                updateCustomers = updateCustomers + "UPDATE [dbo].[Customers] " + "\n";
+                updateCustomers = updateCustomers + "   SET [CustomerID] = @CustomerID " + "\n";
+                updateCustomers = updateCustomers + "      ,[CompanyName] = @CompanyName " + "\n";
+                updateCustomers = updateCustomers + "      ,[ContactName] = @ContactName " + "\n";
+                updateCustomers = updateCustomers + "      ,[ContactTitle] = @ContactTitle " + "\n";
+                updateCustomers = updateCustomers + "      ,[Address] = @Address " + "\n";
+                updateCustomers = updateCustomers + " WHERE CustomerID = @CustomerID";
+
+                var actualizadas = conexion.Execute(updateCustomers, new
+                {
+                    CustomerID = customers.CustomerID,
+                    CompanyName = customers.CompanyName,
+                    ContactName = customers.ContactName,
+                    ContactTitle = customers.ContactTitle,
+                    Address = customers.Address,
+                });
+                return actualizadas;
+            }
+        }
+
     }
 }
